@@ -2,19 +2,20 @@ const BASE_URL = "https://www.course-api.com/javascript-store-products";
 
 export async function fetchProductsAsync() {
     try {
-        const response = await fetch(BASE_URL); 
+        const response = await fetch(BASE_URL); // Fetch products from the API
         if (!response.ok) {
             throw new Error(`HTTP Error: ${response.status}`);
         }
-        return await response.json();
+        const products = await response.json(); 
+        console.log("Products fetched with async/await:", products);
+        displayProducts(products); 
     } catch (error) {
-        handleError(error);
-        throw error; 
+        handleError(error); 
     }
 }
 
 export function handleError(error) {
-    console.error("An error occurred:", error.message);
+    console.error("An error occurred: " + error.message); // Logs the error message
 }
 
 export function displayProducts(products) {
