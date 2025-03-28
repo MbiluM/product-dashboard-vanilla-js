@@ -1,18 +1,18 @@
-import { handleError } from "./api.js";
-import { displayProducts } from "./api.js";
-const API_URL = "https://www.course-api.com/javascript-store-products";
+import { handleError, displayProducts } from "./api.js";
+const BASE_URL = "https://www.course-api.com/javascript-store-products"; 
 
 async function fetchProductsAsync() {
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch(BASE_URL); // Fetch products from the API
         if (!response.ok) {
             throw new Error(`HTTP Error: ${response.status}`);
         }
-        const products = await response.json();
-        console.log("Products fetched with async/await:");
-        displayProducts(products);
+        const products = await response.json(); 
+        console.log("Products fetched with async/await:", products);
+        displayProducts(products); // Display the products
     } catch (error) {
-        handleError(error);
+        handleError(error); 
     }
-};
+}
+
 fetchProductsAsync();
