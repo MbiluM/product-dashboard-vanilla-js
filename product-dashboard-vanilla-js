@@ -1,0 +1,19 @@
+import { handleError } from "./api.js";
+const API_URL = "https://www.course-api.com/javascript-store-products";
+
+function fetchProductsThen() {
+    fetch(API_URL)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP Error: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(products => {
+            console.log("Products fetched with .then():");
+            products.forEach(product => console.log(product.fields.name));
+        })
+        .catch(error => handleError(error));
+};
+
+fetchProductsThen();
