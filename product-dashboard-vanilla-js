@@ -1,18 +1,59 @@
-import { handleError, displayProducts } from "./api.js";
-const BASE_URL = "https://www.course-api.com/javascript-store-products"; 
+const API_URL = "https://www.course-api.com/javascript-store-products";
 
+// Task 2: Fetch products using .then()
+function fetchProductsThen() {
+    fetch(API_URL)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(products => {
+            console.log("Products fetched using .then():", products.map(p => p.fields.name));
+        })
+        .catch(handleError);
+}
+
+// Task 3: Fetch products using async/await
 async function fetchProductsAsync() {
     try {
-        const response = await fetch(BASE_URL); // Fetch products from the API
+        const response = await fetch(API_URL);
         if (!response.ok) {
-            throw new Error(`HTTP Error: ${response.status}`);
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        const products = await response.json(); 
-        console.log("Products fetched with async/await:", products);
-        displayProducts(products); // Display the products
+        const products = await response.json();
+        displayProducts(products);
     } catch (error) {
-        handleError(error); 
+        handleError(error);
     }
 }
 
+// Task 4: Display the products in the DOM
+function displayProducts(products) {
+    const container = document.getElementById("product-container");
+    container.innerHTML = "";
+    
+    products.slice(0, 5).forEach(product => {
+        const { name, price, image } = product.fields;
+        const productElement = document.createElement("div");
+        productElement.classList.add("product");
+        
+        productElement.innerHTML = `
+            <img src="${image[0].url}" alt="${name}" class="product-image" />
+            <h2 class="product-name">${name}</h2>
+            <p class="product-price">$${(price / 100).toFixed(2)}</p>
+        `;
+        
+        container.appendChild(productElement);
+    });
+}
+
+// Task 5: Reusable error handler
+function handleError(error) {
+    console.error("An error occurred:", error.message);
+}
+
+// Task 6: Call fetch functions
+fetchProductsThen();
 fetchProductsAsync();
