@@ -1,8 +1,8 @@
-const API_URL = "https://www.course-api.com/javascript-store-products";
+const Base_URL = "https://www.course-api.com/javascript-store-products";
 
 // Task 2: Fetch products using .then()
 function fetchProductsThen() {
-    fetch(API_URL)
+    fetch(Base_URL)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -18,7 +18,7 @@ function fetchProductsThen() {
 // Task 3: Fetch products using async/await
 async function fetchProductsAsync() {
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch(Base_URL);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
